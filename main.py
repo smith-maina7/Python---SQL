@@ -34,6 +34,25 @@ rows = cursor.fetchall()
 for row in rows:
     print(row)
 
+    # cursor.executemany() function used to insert multiple records at once
+more_users = [
+    ('David', 28),
+    ('Eve', 22),
+    ('Frank', 40)
+]
+cursor.executemany('''
+    INSERT INTO users (name, age) VALUES (?, ?)
+''', more_users)
+
+#fetchall() function used to fetch all records from the table
+cursor.execute("SELECT * FROM users")
+rows = cursor.fetchall()
+for row in rows:
+    print(row)
+
+# Commit the changes
 cursor.close()
 conn.close()
 
+
+ 
