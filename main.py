@@ -6,7 +6,7 @@ cursor = conn.cursor()
 # Create a table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY aUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         age INTEGER NOT NULL
     )
@@ -50,7 +50,27 @@ rows = cursor.fetchall()
 for row in rows:
     print(row)
 
-# Commit the changes
+
+# updating a record"
+
+cursor.execute('''
+    SELECT id
+    FROM users
+    WHERE name = ?
+''', ('Alice',))  
+result = cursor.fetchone()
+if result:
+    user_id = result[0]
+    cursor.execute(''' 
+        UPDATE users
+        SET name = ?
+        WHERE id = ?
+    ''', ('Alice Smith', user_id))  
+    conn.commit()
+    print("Record updated successfully")
+else:
+    print("User not found")
+# Close the connection
 cursor.close()
 conn.close()
 
