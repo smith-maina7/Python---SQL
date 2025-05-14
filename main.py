@@ -70,7 +70,34 @@ if result:
     print("Record updated successfully")
 else:
     print("User not found")
-# Close the connection
+
+ #Deleting a record
+
+cursor.execute("SELECT id FROM users WHERE name =?", ('Bob',))
+result = cursor.fetchone()
+
+if result:
+    user_id = result[0]
+    cursor.execute('''
+        DELETE FROM users
+        WHERE id = ?''', (user_id,))
+    conn.commit()
+    print("Record deleted successfully")
+else:
+    print("User not found")
+
+# Fetch all users from the table
+cursor.execute("SELECT * FROM users")
+for row in cursor.fetchall():
+    print(row)
+#Close the connection
+
+# cursor.execute("DELETE FROM users")
+# conn.commit()
+# # Fetch all users from the table
+# cursor.execute("SELECT * FROM users")
+# for row in cursor.fetchall():
+#     print(row)
 cursor.close()
 conn.close()
 
